@@ -1,10 +1,6 @@
 name: Build FFmpeg
 
 on:
-  push:
-    paths-ignore:
-      - '**.md'
-      - 'LICENSE'
   workflow_dispatch:
     inputs:
       doRelease:
@@ -17,8 +13,6 @@ on:
         type: boolean
         default: false
         required: false
-  schedule:
-    - cron: '0 12 * * *'
 
 env:
   DOCKER_BUILDKIT: 1
@@ -86,8 +80,10 @@ jobs:
           push: true
           provenance: false
           tags: ${{ steps.imagename.outputs.name }}:latest${{ (contains(matrix.runner, 'arm') && '-arm') || '' }}
-          cache-to: type=registry,mode=max,ref=${{ steps.imagename.outputs.name }}:cache${{ (contains(matrix.runner, 'arm') && '-arm') || '' }}
-          cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}:cache${{ (contains(matrix.runner, 'arm') && '-arm') || '' }}
+          # cache-to: type=registry,mode=max,ref=${{ steps.imagename.outputs.name }}:cache${{ (contains(matrix.runner, 'arm') && '-arm') || '' }}
+          # cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}:cache${{ (contains(matrix.runner, 'arm') && '-arm') || '' }}
+          cache-to: type=gha,mode=max
+          cache-from: type=gha
       - name: Get download cache key
         if: ${{ !cancelled() && !contains(matrix.runner, 'arm') }}
         id: dl_cache
