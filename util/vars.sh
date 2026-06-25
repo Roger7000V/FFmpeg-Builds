@@ -97,7 +97,7 @@ ffbuild_dockerfinal() {
 }
 
 ffbuild_configure() {
-    return 0
+    echo '--enable-lto'
 }
 
 ffbuild_unconfigure() {
@@ -105,7 +105,7 @@ ffbuild_unconfigure() {
 }
 
 ffbuild_cflags() {
-    return 0
+    echo '-O3 -flto'
 }
 
 ffbuild_uncflags() {
@@ -113,7 +113,7 @@ ffbuild_uncflags() {
 }
 
 ffbuild_cxxflags() {
-    return 0
+    echo '-O3 -flto'
 }
 
 ffbuild_uncxxflags() {
@@ -129,7 +129,7 @@ ffbuild_unldexeflags() {
 }
 
 ffbuild_ldflags() {
-    return 0
+    echo '-flto'
 }
 
 ffbuild_unldflags() {
