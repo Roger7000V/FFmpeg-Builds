@@ -1,0 +1,28 @@
+name: Cleanup
+on: workflow_dispatch
+
+permissions: write-all
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup Workflow Runs
+        uses: iamludal/action-purge-workflow-runs@v2
+        with:
+          days-old: 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - uses: actions/checkout@v4
+
+      # - name: Cleanup Commit History
+      #   run: |
+      #     git config user.name 'GitHub Actions'
+      #     git config user.email '<>'
+      #     git checkout --orphan latest_branch
+      #     git add -A
+      #     git commit -m 'Initial commit'
+      #     git branch -D main
+      #     git branch -M main
+      #     git push -f origin main
